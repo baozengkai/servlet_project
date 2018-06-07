@@ -3,6 +3,8 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.*;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  *  1.HelloWorld程序
@@ -10,7 +12,9 @@ import java.io.*;
  *      处理单个数据
  *      处理表单数据
  *      处理请求头
+ *      处理响应头
  *  3.处理Post请求
+ *  4.编写过滤器
  */
 
 
@@ -48,14 +52,12 @@ public class HelloWorld extends  HttpServlet{
 //        PrintWriter out = response.getWriter();
 //        response.setContentType("text/html");
 //        out.println("<h1>"+ name + "</h1>");
-
         // 2.2处理Get的form表单
         // 设置服务器端将网页数据bytes转为字符 解码的方式用utf-8
         request.setCharacterEncoding("utf-8");
 
         String user = request.getParameter("user");
         String passwd = new String(request.getParameter("passwd"));
-        System.out.println(user);
 
         // 设置服务器端将字符转换为bytes编码的方式用utf-8
         response.setCharacterEncoding("utf-8");
@@ -63,14 +65,25 @@ public class HelloWorld extends  HttpServlet{
         PrintWriter out = response.getWriter();
         response.setContentType("text/html");
         out.println("<h1>"+ user + "</h1> <br> <h1>" + passwd + "</h1>");
-
         // 2.3 处理请求头
 //        String method = request.getMethod();
 //        String characterset =  request.getCharacterEncoding();
 //        PrintWriter out = response.getWriter();
 //        response.setContentType("text/html");
 //        out.println("<h1>"+ method + "</h1> <br> <h1>" + characterset + "</h1>");
-
+        // 2.4 处理响应头
+        // 设置自动刷新加载为5秒
+//        response.setIntHeader("Refresh",5);
+        // 设置客户端接收数据类型和编码格式
+//        response.setContentType("text/html;charset=UTF-8");
+//
+//        Calendar cale = Calendar.getInstance();
+//        Date taskTime = cale.getTime();
+//        String nowTime = taskTime.toString();
+//
+//        PrintWriter out = response.getWriter();
+//        response.setContentType("text/html");
+//        out.println("<h1> 现在时间是: </h1> <br> <h1>" + nowTime + "</h1>");
     }
 
     // 3.处理Post请求

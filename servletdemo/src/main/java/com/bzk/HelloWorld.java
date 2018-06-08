@@ -15,6 +15,9 @@ import java.util.Date;
  *      处理响应头
  *  3.处理Post请求
  *  4.编写过滤器
+ *  5.处理Cookie
+ *      设置Cookie信息
+ *  6.处理Session
  */
 
 
@@ -28,7 +31,6 @@ public class HelloWorld extends  HttpServlet{
     {
         message = "Hello 123";
     }
-
 
     // 1.HelloWorld程序
 //    @Override
@@ -54,17 +56,17 @@ public class HelloWorld extends  HttpServlet{
 //        out.println("<h1>"+ name + "</h1>");
         // 2.2处理Get的form表单
         // 设置服务器端将网页数据bytes转为字符 解码的方式用utf-8
-        request.setCharacterEncoding("utf-8");
-
-        String user = request.getParameter("user");
-        String passwd = new String(request.getParameter("passwd"));
-
-        // 设置服务器端将字符转换为bytes编码的方式用utf-8
-        response.setCharacterEncoding("utf-8");
-
-        PrintWriter out = response.getWriter();
-        response.setContentType("text/html");
-        out.println("<h1>"+ user + "</h1> <br> <h1>" + passwd + "</h1>");
+//        request.setCharacterEncoding("utf-8");
+//
+//        String user = request.getParameter("user");
+//        String passwd = new String(request.getParameter("passwd"));
+//
+//        // 设置服务器端将字符转换为bytes编码的方式用utf-8
+//        response.setCharacterEncoding("utf-8");
+//
+//        PrintWriter out = response.getWriter();
+//        response.setContentType("text/html");
+//        out.println("<h1>"+ user + "</h1> <br> <h1>" + passwd + "</h1>");
         // 2.3 处理请求头
 //        String method = request.getMethod();
 //        String characterset =  request.getCharacterEncoding();
@@ -84,6 +86,8 @@ public class HelloWorld extends  HttpServlet{
 //        PrintWriter out = response.getWriter();
 //        response.setContentType("text/html");
 //        out.println("<h1> 现在时间是: </h1> <br> <h1>" + nowTime + "</h1>");
+        // 3.1 设置Cookie
+        setCookie(request, response);
     }
 
     // 3.处理Post请求
@@ -93,6 +97,36 @@ public class HelloWorld extends  HttpServlet{
         doGet(request,response);
     }
 
+    // 4.处理Cookie
+    public void setCookie(HttpServletRequest request, HttpServletResponse response) throws SecurityException, IOException{
+
+        // 获取当Cookie原料的参数
+        Cookie user = new Cookie("user",request.getParameter("user"));
+        Cookie passwd = new Cookie("passwd", request.getParameter("passwd"));
+
+        // 设置Cookie的保质期(设置为24小时)
+        user.setMaxAge(60*60*24);
+        passwd.setMaxAge(60*60*24);
+
+        //在响应头中添加这两个Cookie
+        response.addCookie(user);
+        response.addCookie(passwd);
+
+
+        //设置输出
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+
+        out.println("<h1> 设置的Cookie实例为: <h1/>");
+        out.println("<h2>"+request.getParameter("user")+"</h2>");
+        out.println("<h2>"+request.getParameter("passwd")+"</h2>");
+    }
+
+    // 5.处理Session
+    public void setSession(HttpServletRequest request, HttpServletResponse response) throws SecurityException, IOException{
+        HttpSession session = request.getSession();
+
+    }
     @Override
     public void destroy()
     {}

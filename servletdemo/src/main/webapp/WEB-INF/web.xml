@@ -5,6 +5,7 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
 
+  <!--身份认证过滤器-->
   <filter>
     <filter-name>AuthenFilterDemo</filter-name>
     <filter-class>com.bzk.AuthenFilterDemo</filter-class>
@@ -16,9 +17,10 @@
 
   <filter-mapping>
     <filter-name>AuthenFilterDemo</filter-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/HelloWorld</url-pattern>
   </filter-mapping>
 
+  <!--处理web请求的Servlet-->
   <servlet>
     <servlet-name>HelloWorld</servlet-name>
     <servlet-class>com.bzk.HelloWorld</servlet-class>
@@ -26,6 +28,35 @@
 
   <servlet-mapping>
     <servlet-name>HelloWorld</servlet-name>
-    <url-pattern>/hello</url-pattern>
+    <url-pattern>/Hello</url-pattern>
   </servlet-mapping>
+  <!--处理异常的Servlet-->
+  <servlet>
+    <servlet-name>ExceptionHandler</servlet-name>
+    <servlet-class>com.bzk.ExceptionHandler</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>ExceptionHandler</servlet-name>
+    <url-pattern>/ExceptionHandler</url-pattern>
+  </servlet-mapping>
+
+  <!--发生错误码之后的映射-->
+  <error-page>
+    <error-code>404</error-code>
+    <location>/ExceptionHandler</location>
+  </error-page>
+
+  <!--抛出异常之后的映射-->
+  <error-page>
+    <exception-type>javax.servlet.ServletException</exception-type>
+    <location>/ExceptionHandler</location>
+  </error-page>
+
+  <error-page>
+    <exception-type>javax.servlet.IOException</exception-type>
+    <location>/ExceptionHandler</location>
+  </error-page>
+
+
 </web-app>
